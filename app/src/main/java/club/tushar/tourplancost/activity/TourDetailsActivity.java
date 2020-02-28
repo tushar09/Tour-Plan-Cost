@@ -6,7 +6,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Binder;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+
+import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -39,6 +42,7 @@ public class TourDetailsActivity extends AppCompatActivity {
         for (int i = 0; i < list.size(); i++) {
             money += list.get(i).getCost();
         }
+        Log.e("log", new Gson().toJson(list));
         binding.total.setText("BDT" + money);
 
         binding.btSave.setOnClickListener(new View.OnClickListener() {
