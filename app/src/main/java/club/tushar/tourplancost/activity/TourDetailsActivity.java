@@ -31,6 +31,7 @@ public class TourDetailsActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_tour_details);
 
         id = getIntent().getLongExtra("id", 0);
+        getSupportActionBar().setTitle(getIntent().getStringExtra("name"));
 
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         binding.rv.setLayoutManager(linearLayoutManager);
@@ -43,7 +44,7 @@ public class TourDetailsActivity extends AppCompatActivity {
             money += list.get(i).getCost();
         }
         Log.e("log", new Gson().toJson(list));
-        binding.total.setText("BDT" + money);
+        binding.total.setText("Total " + money);
 
         binding.btSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,7 +64,7 @@ public class TourDetailsActivity extends AppCompatActivity {
                 for (int i = 0; i < list.size(); i++) {
                     money += list.get(i).getCost();
                 }
-                binding.total.setText("Total BDT" + money);
+                binding.total.setText("Total " + money);
                 binding.etEventCost.setText("");
                 binding.etEventName.setText("");
             }

@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import club.tushar.tourplancost.R;
@@ -21,10 +23,12 @@ public class TourAdapter extends RecyclerView.Adapter{
 
     private Context context;
     private List<Tour> tours;
+    private SimpleDateFormat sdf;
 
     public TourAdapter(Context context, List<Tour> tours) {
         this.context = context;
         this.tours = tours;
+        sdf = new SimpleDateFormat("dd MMM yyyy");
     }
 
     @NonNull
@@ -38,12 +42,13 @@ public class TourAdapter extends RecyclerView.Adapter{
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position){
         RowTour h = (RowTour) holder;
         h.binding.tvName.setText(tours.get(position).getName());
-        h.binding.tvDate.setText(tours.get(position).getStartDate() + "");
+        h.binding.tvDate.setText(sdf.format(new Date(tours.get(position).getStartDate())));
         h.binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 context.startActivity(new Intent(context, TourDetailsActivity.class)
                         .putExtra("id", tours.get(position).getId())
+                        .putExtra("name", tours.get(position).getName())
                 );
             }
         });

@@ -23,7 +23,7 @@ public class TourEventCostAdapter extends RecyclerView.Adapter{
 
     private Context context;
     private List<TourEventCost> tours;
-    SimpleDateFormat sdf;
+    private SimpleDateFormat sdf;
 
     public TourEventCostAdapter(Context context, List<TourEventCost> tours) {
         this.context = context;
