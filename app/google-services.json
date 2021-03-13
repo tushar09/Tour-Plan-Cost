@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "592318687706",
+    "project_id": "tour-plan-and-cost",
+    "storage_bucket": "tour-plan-and-cost.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:592318687706:android:19cbdfde786db0318c38e3",
+        "android_client_info": {
+          "package_name": "club.tushar.tourplancost"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "592318687706-tas5usreq22pm7jf94e4a3k2fj05bfkv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "club.tushar.tourplancost",
+            "certificate_hash": "1881f14a2ebce1355497854884a73f777ddae947"
+          }
+        },
+        {
+          "client_id": "592318687706-dtbrcsiqgqeq559bqae0q4ar4sbj3t0d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUfpEmWaeEyKlpUZhewnREw6mQ2caq3Mk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "592318687706-dtbrcsiqgqeq559bqae0q4ar4sbj3t0d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

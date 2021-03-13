@@ -10,4 +10,12 @@ public class Constant{
         return new DbHelper(context);
     }
 
+    public static SPreferences sPreferences;
+
+    public static final SPreferences getSharedPreferences(Context context){
+        if(sPreferences == null){
+            sPreferences = new SPreferences(context);
+        }
+        return sPreferences;
+    }
 }

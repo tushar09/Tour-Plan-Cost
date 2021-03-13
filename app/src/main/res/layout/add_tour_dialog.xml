@@ -12,6 +12,7 @@
         android:hint="@string/tour_name"
         android:layout_marginBottom="@dimen/_10sdp"
         app:helperText="@string/required"
+        android:id="@+id/etTourName"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -24,6 +25,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/description"
         app:helperText="@string/optional"
+        android:id="@+id/etTourDescription"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText

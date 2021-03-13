@@ -34,8 +34,8 @@ public class TourAdapter extends RecyclerView.Adapter{
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType){
-        //RowTourBinding binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.row_tour, viewGroup, false);
-        return new RowTour(null);
+        RowTourBinding binding = RowTourBinding.inflate(LayoutInflater.from(context), viewGroup, false);
+        return new RowTour(binding);
     }
 
     @Override
