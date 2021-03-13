@@ -9,7 +9,7 @@
     </style>
 
     <!-- Base application theme material design. -->
-    <style name="MaterialTheme" parent="Theme.MaterialComponents.DayNight">
+    <style name="MaterialTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
