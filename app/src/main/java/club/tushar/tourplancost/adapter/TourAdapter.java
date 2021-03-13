@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.databinding.DataBindingUtil;
+
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.SimpleDateFormat;
@@ -34,8 +34,8 @@ public class TourAdapter extends RecyclerView.Adapter{
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType){
-        RowTourBinding binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.row_tour, viewGroup, false);
-        return new RowTour(binding);
+        //RowTourBinding binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.row_tour, viewGroup, false);
+        return new RowTour(null);
     }
 
     @Override

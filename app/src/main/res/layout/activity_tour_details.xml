@@ -1,45 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
-    <LinearLayout
-        android:padding="@dimen/_15sdp"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    android:padding="@dimen/_15sdp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".activity.TourDetailsActivity">
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_weight="1"
+        android:id="@+id/rv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
-        tools:context=".activity.TourDetailsActivity">
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_weight="1"
-            android:id="@+id/rv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+        android:layout_height="match_parent"/>
 
-        <TextView
-            android:id="@+id/total"
-            android:text="BDT4000"
-            android:textColor="#000"
-            style="@style/ShapeAppearance.MaterialComponents.MediumComponent"
-            android:textStyle="bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <EditText
-            android:hint="@string/event"
-            android:id="@+id/et_event_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <EditText
-            android:hint="@string/amount"
-            android:inputType="number"
-            android:id="@+id/et_event_cost"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <Button
-            android:layout_marginTop="@dimen/_15sdp"
-            android:id="@+id/bt_save"
-            android:text="add"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
-</layout>
+    <TextView
+        android:id="@+id/total"
+        android:text="BDT4000"
+        android:textColor="#000"
+        style="@style/ShapeAppearance.MaterialComponents.MediumComponent"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <EditText
+        android:hint="@string/event"
+        android:id="@+id/et_event_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <EditText
+        android:hint="@string/amount"
+        android:inputType="number"
+        android:id="@+id/et_event_cost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:layout_marginTop="@dimen/_15sdp"
+        android:id="@+id/bt_save"
+        android:text="add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

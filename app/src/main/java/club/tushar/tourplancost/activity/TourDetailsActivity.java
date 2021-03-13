@@ -1,7 +1,7 @@
 package club.tushar.tourplancost.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Binder;
@@ -28,7 +28,7 @@ public class TourDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_tour_details);
+        //binding = DataBindingUtil.setContentView(this, R.layout.activity_tour_details);
 
         id = getIntent().getLongExtra("id", 0);
         getSupportActionBar().setTitle(getIntent().getStringExtra("name"));

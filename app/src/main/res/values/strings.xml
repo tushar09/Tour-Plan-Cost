@@ -3,4 +3,11 @@
     <string name="save">Save</string>
     <string name="event">Item Name</string>
     <string name="amount">Amount</string>
+    <string name="description">Descriprion</string>
+    <string name="required">*Required</string>
+    <string name="optional">Optional</string>
+    <string name="tour_name">Tour Name</string>
+    <string name="add">Add</string>
+    <string name="cancel">Cancel</string>
+    <string name="add_tour">Add Tour</string>
 </resources>

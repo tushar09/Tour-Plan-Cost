@@ -1,7 +1,6 @@
 package club.tushar.tourplancost.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
 
 import android.os.Bundle;
 import android.view.View;
@@ -18,7 +17,7 @@ public class AddTourActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_add_tour);
+        //binding = DataBindingUtil.setContentView(this, R.layout.activity_add_tour);
 
         binding.btSave.setOnClickListener(new View.OnClickListener() {
             @Override
