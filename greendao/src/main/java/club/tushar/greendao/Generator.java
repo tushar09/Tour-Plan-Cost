@@ -6,7 +6,7 @@ import org.greenrobot.greendao.generator.Schema;
 
 public class Generator {
     public static void main(String [] args){
-        Schema schema = new Schema(2, "club.tushar.tourplancost.db"); // Your app package name and the (.db) is the folder where the DAO files will be generated into.
+        Schema schema = new Schema(3, "club.tushar.tourplancost.db"); // Your app package name and the (.db) is the folder where the DAO files will be generated into.
         schema.enableKeepSectionsByDefault();
 
         addTables(schema);
@@ -26,7 +26,7 @@ public class Generator {
     private static Entity addTourEntities(Schema schema) {
         Entity tour = schema.addEntity("Tour");
         tour.addIdProperty().autoincrement();
-        tour.addStringProperty("name");
+        tour.addStringProperty("name").unique();
         tour.addLongProperty("startDate");
         tour.addLongProperty("endDate");
         tour.addStringProperty("description");

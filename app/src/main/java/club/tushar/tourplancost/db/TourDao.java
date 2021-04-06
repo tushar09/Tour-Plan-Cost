@@ -43,7 +43,7 @@ public class TourDao extends AbstractDao<Tour, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"TOUR\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
-                "\"NAME\" TEXT," + // 1: name
+                "\"NAME\" TEXT UNIQUE ," + // 1: name
                 "\"START_DATE\" INTEGER," + // 2: startDate
                 "\"END_DATE\" INTEGER," + // 3: endDate
                 "\"DESCRIPTION\" TEXT);"); // 4: description

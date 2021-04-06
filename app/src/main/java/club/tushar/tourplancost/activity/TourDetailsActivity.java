@@ -28,7 +28,8 @@ public class TourDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //binding = DataBindingUtil.setContentView(this, R.layout.activity_tour_details);
+        binding = ActivityTourDetailsBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         id = getIntent().getLongExtra("id", 0);
         getSupportActionBar().setTitle(getIntent().getStringExtra("name"));

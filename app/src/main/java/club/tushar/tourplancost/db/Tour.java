@@ -15,6 +15,8 @@ public class Tour {
 
     @Id(autoincrement = true)
     private Long id;
+
+    @Unique
     private String name;
     private Long startDate;
     private Long endDate;

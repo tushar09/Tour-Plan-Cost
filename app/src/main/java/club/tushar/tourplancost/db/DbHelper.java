@@ -39,6 +39,11 @@ public class DbHelper {
         tourDao.insertOrReplaceInTx(t);
     }
 
+    public Tour getTourByName(String name){
+        QueryBuilder<Tour> qb = tourDao.queryBuilder();
+        return qb.where(TourDao.Properties.Name.eq(name)).unique();
+    }
+
     public List<TourEventCost> getTourEventCosts(long id){
         QueryBuilder<TourEventCost> qb = tourEventCostDao.queryBuilder();
         //qb.and(WrongAnswersDao.Properties.FlowId.eq(flowId));
