@@ -44,7 +44,7 @@ public class TourDetailsActivity extends AppCompatActivity {
         for (int i = 0; i < list.size(); i++) {
             money += list.get(i).getCost();
         }
-        Log.e("log", new Gson().toJson(list));
+        Log.e("log", id + new Gson().toJson(list));
         binding.total.setText("Total " + money);
 
         binding.btSave.setOnClickListener(new View.OnClickListener() {
@@ -55,7 +55,7 @@ public class TourDetailsActivity extends AppCompatActivity {
                 }
                 TourEventCost cost = new TourEventCost();
                 cost.setCost(Integer.parseInt(binding.etEventCost.getText().toString()));
-                cost.setName(binding.etEventName.getText().toString());
+                cost.setEventName(binding.etEventName.getText().toString());
                 cost.setDate(System.currentTimeMillis());
                 cost.setTourId(id);
                 Constant.getDbHelper(TourDetailsActivity.this).addTourEventCost(cost);

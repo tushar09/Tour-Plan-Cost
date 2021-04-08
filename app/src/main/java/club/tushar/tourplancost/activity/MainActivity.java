@@ -52,24 +52,35 @@ public class MainActivity extends AppCompatActivity {
         binding.rvPlan.setLayoutManager(linearLayoutManager);
         binding.rvPlan.setAdapter(new TourAdapter(this, list));
 
-        Tour t = new Tour();
-        t.setStartDate(System.currentTimeMillis());
-        t.setName(getMonth());
-        t.setDescription("");
+        Tour t = Constant.getDbHelper(MainActivity.this).getTourByName(getMonth());
+        Tour t2 = Constant.getDbHelper(MainActivity.this).getTourByName(getMonth2());
+        if(t == null){
+            t = new Tour();
+            t.setStartDate(System.currentTimeMillis());
+            t.setName(getMonth());
+            t.setDescription("");
+        }
+        if(t2 == null){
+            t2 = new Tour();
+            t2.setStartDate(System.currentTimeMillis());
+            t2.setName(getMonth2());
+            t2.setDescription("");
+        }
         Constant.getDbHelper(MainActivity.this).addTour(t);
+        Constant.getDbHelper(MainActivity.this).addTour(t2);
 
-        getMonth();
         setTourList();
     }
 
     private void setTourList() {
+        //Constant.getDbHelper(this).getTourList();
         list.clear();
         list.addAll(Constant.getDbHelper(this).getTourList());
         binding.rvPlan.getAdapter().notifyDataSetChanged();
     }
 
     private void addTour(){
-        Tour t = Constant.getDbHelper(this).getTourByName(getMonth());
+        final Tour t = Constant.getDbHelper(this).getTourByName(getMonth());
         final AddTourDialogBinding addTourDialogBinding = AddTourDialogBinding.inflate(getLayoutInflater());
         AlertDialog builder = new MaterialAlertDialogBuilder(this,
                 R.style.AlertDialogTheme)
@@ -80,17 +91,11 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int i) {
 
                         TourEventCost cost = new TourEventCost();
-                        cost.setCost(Integer.parseInt(addTourDialogBinding.etTourName.getEditText().getText().toString()));
-                        cost.setName(binding.etEventName.getText().toString());
+                        cost.setCost(Integer.parseInt(addTourDialogBinding.etExpenseAmount.getEditText().getText().toString()));
+                        cost.setEventName(addTourDialogBinding.etExpenseName.getEditText().getText().toString());
                         cost.setDate(System.currentTimeMillis());
-                        cost.setTourId(id);
-                        Constant.getDbHelper(TourDetailsActivity.this).addTourEventCost(cost);
-
-                        Tour t = new Tour();
-                        t.setStartDate(System.currentTimeMillis());
-                        t.setName(addTourDialogBinding.etTourName.getEditText().getText().toString());
-                        t.setDescription(addTourDialogBinding.etTourDescription.getEditText().toString());
-                        Constant.getDbHelper(MainActivity.this).addTour(t);
+                        cost.setTourId(t.getId());
+                        Constant.getDbHelper(MainActivity.this).addTourEventCost(cost);
                         setTourList();
                     }
                 })
@@ -108,5 +113,13 @@ public class MainActivity extends AppCompatActivity {
         SimpleDateFormat df = new SimpleDateFormat("MMMM yyyy", Locale.getDefault());
         String formattedDate = df.format(c);
         return formattedDate;
+    }
+
+    private String getMonth2(){
+        Date c = Calendar.getInstance().getTime();
+
+        SimpleDateFormat df = new SimpleDateFormat("MMMM yyyy", Locale.getDefault());
+        String formattedDate = df.format(c);
+        return "April 2022";
     }
 }

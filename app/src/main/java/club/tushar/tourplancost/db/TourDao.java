@@ -24,10 +24,13 @@ public class TourDao extends AbstractDao<Tour, Long> {
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property Name = new Property(1, String.class, "name", false, "NAME");
-        public final static Property StartDate = new Property(2, Long.class, "startDate", false, "START_DATE");
-        public final static Property EndDate = new Property(3, Long.class, "endDate", false, "END_DATE");
-        public final static Property Description = new Property(4, String.class, "description", false, "DESCRIPTION");
+        public final static Property Total = new Property(2, Long.class, "total", false, "TOTAL");
+        public final static Property StartDate = new Property(3, Long.class, "startDate", false, "START_DATE");
+        public final static Property EndDate = new Property(4, Long.class, "endDate", false, "END_DATE");
+        public final static Property Description = new Property(5, String.class, "description", false, "DESCRIPTION");
     }
+
+    private DaoSession daoSession;
 
 
     public TourDao(DaoConfig config) {
@@ -36,6 +39,7 @@ public class TourDao extends AbstractDao<Tour, Long> {
     
     public TourDao(DaoConfig config, DaoSession daoSession) {
         super(config, daoSession);
+        this.daoSession = daoSession;
     }
 
     /** Creates the underlying database table. */
@@ -44,9 +48,10 @@ public class TourDao extends AbstractDao<Tour, Long> {
         db.execSQL("CREATE TABLE " + constraint + "\"TOUR\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "\"NAME\" TEXT UNIQUE ," + // 1: name
-                "\"START_DATE\" INTEGER," + // 2: startDate
-                "\"END_DATE\" INTEGER," + // 3: endDate
-                "\"DESCRIPTION\" TEXT);"); // 4: description
+                "\"TOTAL\" INTEGER," + // 2: total
+                "\"START_DATE\" INTEGER," + // 3: startDate
+                "\"END_DATE\" INTEGER," + // 4: endDate
+                "\"DESCRIPTION\" TEXT);"); // 5: description
     }
 
     /** Drops the underlying database table. */
@@ -69,19 +74,24 @@ public class TourDao extends AbstractDao<Tour, Long> {
             stmt.bindString(2, name);
         }
  
+        Long total = entity.getTotal();
+        if (total != null) {
+            stmt.bindLong(3, total);
+        }
+ 
         Long startDate = entity.getStartDate();
         if (startDate != null) {
-            stmt.bindLong(3, startDate);
+            stmt.bindLong(4, startDate);
         }
  
         Long endDate = entity.getEndDate();
         if (endDate != null) {
-            stmt.bindLong(4, endDate);
+            stmt.bindLong(5, endDate);
         }
  
         String description = entity.getDescription();
         if (description != null) {
-            stmt.bindString(5, description);
+            stmt.bindString(6, description);
         }
     }
 
@@ -99,20 +109,31 @@ public class TourDao extends AbstractDao<Tour, Long> {
             stmt.bindString(2, name);
         }
  
+        Long total = entity.getTotal();
+        if (total != null) {
+            stmt.bindLong(3, total);
+        }
+ 
         Long startDate = entity.getStartDate();
         if (startDate != null) {
-            stmt.bindLong(3, startDate);
+            stmt.bindLong(4, startDate);
         }
  
         Long endDate = entity.getEndDate();
         if (endDate != null) {
-            stmt.bindLong(4, endDate);
+            stmt.bindLong(5, endDate);
         }
  
         String description = entity.getDescription();
         if (description != null) {
-            stmt.bindString(5, description);
+            stmt.bindString(6, description);
         }
+    }
+
+    @Override
+    protected final void attachEntity(Tour entity) {
+        super.attachEntity(entity);
+        entity.__setDaoSession(daoSession);
     }
 
     @Override
@@ -125,9 +146,10 @@ public class TourDao extends AbstractDao<Tour, Long> {
         Tour entity = new Tour( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // name
-            cursor.isNull(offset + 2) ? null : cursor.getLong(offset + 2), // startDate
-            cursor.isNull(offset + 3) ? null : cursor.getLong(offset + 3), // endDate
-            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4) // description
+            cursor.isNull(offset + 2) ? null : cursor.getLong(offset + 2), // total
+            cursor.isNull(offset + 3) ? null : cursor.getLong(offset + 3), // startDate
+            cursor.isNull(offset + 4) ? null : cursor.getLong(offset + 4), // endDate
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5) // description
         );
         return entity;
     }
@@ -136,9 +158,10 @@ public class TourDao extends AbstractDao<Tour, Long> {
     public void readEntity(Cursor cursor, Tour entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setName(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
-        entity.setStartDate(cursor.isNull(offset + 2) ? null : cursor.getLong(offset + 2));
-        entity.setEndDate(cursor.isNull(offset + 3) ? null : cursor.getLong(offset + 3));
-        entity.setDescription(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setTotal(cursor.isNull(offset + 2) ? null : cursor.getLong(offset + 2));
+        entity.setStartDate(cursor.isNull(offset + 3) ? null : cursor.getLong(offset + 3));
+        entity.setEndDate(cursor.isNull(offset + 4) ? null : cursor.getLong(offset + 4));
+        entity.setDescription(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
      }
     
     @Override

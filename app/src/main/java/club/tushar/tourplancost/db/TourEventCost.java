@@ -16,8 +16,8 @@ public class TourEventCost {
     @Id(autoincrement = true)
     private Long id;
     private Long tourId;
-    private String name;
-    private Long Date;
+    private String eventName;
+    private Long date;
     private Integer cost;
 
     // KEEP FIELDS - put your custom fields here
@@ -32,11 +32,11 @@ public class TourEventCost {
     }
 
     @Generated
-    public TourEventCost(Long id, Long tourId, String name, Long Date, Integer cost) {
+    public TourEventCost(Long id, Long tourId, String eventName, Long date, Integer cost) {
         this.id = id;
         this.tourId = tourId;
-        this.name = name;
-        this.Date = Date;
+        this.eventName = eventName;
+        this.date = date;
         this.cost = cost;
     }
 
@@ -56,20 +56,20 @@ public class TourEventCost {
         this.tourId = tourId;
     }
 
-    public String getName() {
-        return name;
+    public String getEventName() {
+        return eventName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setEventName(String eventName) {
+        this.eventName = eventName;
     }
 
     public Long getDate() {
-        return Date;
+        return date;
     }
 
-    public void setDate(Long Date) {
-        this.Date = Date;
+    public void setDate(Long date) {
+        this.date = date;
     }
 
     public Integer getCost() {

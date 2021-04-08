@@ -6,11 +6,12 @@
     <string name="description">Descriprion</string>
     <string name="required">*Required</string>
     <string name="optional">Optional</string>
-    <string name="tour_name">Tour Name</string>
+    <string name="tour_name">Expense Name</string>
     <string name="add">Add</string>
     <string name="cancel">Cancel</string>
     <string name="add_tour">Add Tour</string>
     <string name="login_google">Login With Google</string>
     <string name="app_description">Manage and track your tour cost and expenses</string>
     <string name="login_failed">Something went wrong, could not login</string>
+    <string name="expense_amount">Amount</string>
 </resources>

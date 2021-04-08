@@ -2,6 +2,7 @@ package club.tushar.tourplancost.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import club.tushar.tourplancost.R;
 import club.tushar.tourplancost.activity.TourDetailsActivity;
 import club.tushar.tourplancost.databinding.RowTourBinding;
 import club.tushar.tourplancost.db.Tour;
+import club.tushar.tourplancost.db.TourEventCost;
 
 public class TourAdapter extends RecyclerView.Adapter{
 
@@ -43,9 +45,11 @@ public class TourAdapter extends RecyclerView.Adapter{
         RowTour h = (RowTour) holder;
         h.binding.tvName.setText(tours.get(position).getName());
         h.binding.tvDate.setText(sdf.format(new Date(tours.get(position).getStartDate())));
+        h.binding.tvTotal.setText(tours.get(position).getTotal() + "");
         h.binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.e("id", tours.get(position).getId() + "");
                 context.startActivity(new Intent(context, TourDetailsActivity.class)
                         .putExtra("id", tours.get(position).getId())
                         .putExtra("name", tours.get(position).getName())

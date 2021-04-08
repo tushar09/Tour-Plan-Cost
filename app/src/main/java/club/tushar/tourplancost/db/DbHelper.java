@@ -1,10 +1,13 @@
 package club.tushar.tourplancost.db;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DbHelper {
@@ -29,14 +32,43 @@ public class DbHelper {
 
 
     public List<Tour> getTourList(){
-        QueryBuilder<Tour> qb = tourDao.queryBuilder();
+        //QueryBuilder<Tour> qb = tourDao.queryBuilder();
+        //qb.join(TourEventCost.class, TourEventCostDao.Properties.TourId);
         //qb.and(WrongAnswersDao.Properties.FlowId.eq(flowId));
         //return qb.list();
-        return qb.build().list();
+        //String query = " LEFT JOIN TOUR_EVENT_COST ON T._id = TOUR_EVENT_COST.TOUR_ID";
+        //String query = "SELECT " + TourDao.Properties.Name.columnName + " FROM " + TourDao.TABLENAME + "  LEFT JOIN TOUR_EVENT_COST ON " + TourDao.Properties.Id.columnName + " = " + TourEventCostDao.Properties.TourId.columnName;
+        //String query = "SELECT *, a._id as iddd, sum(" + TourEventCostDao.Properties.Cost.columnName + ")" + " FROM " + TourDao.TABLENAME + " a  LEFT JOIN TOUR_EVENT_COST ON a." + TourDao.Properties.Id.columnName + " = " + TourEventCostDao.Properties.TourId.columnName;
+        String query = "SELECT *,sum(COST),  a._id as iddd  FROM TOUR a left join TOUR_EVENT_COST on TOUR_ID = a._id  group by NAME";
+        Log.e("quesr", query);
+        Cursor c = daoSession.getDatabase().rawQuery(query, null);
+        for (int i = 0; i < c.getColumnNames().length; i++) {
+            Log.e("name", c.getColumnName(i));
+        }
+
+        List<Tour> tours = new ArrayList<>();
+
+        try{
+            if (c.moveToFirst()) {
+                do {
+                    Tour t = new Tour();
+                    t.setId(c.getLong(c.getColumnIndex("iddd")));
+                    t.setName(c.getString(c.getColumnIndex("NAME")));
+                    t.setStartDate(c.getLong(c.getColumnIndex("START_DATE")));
+                    t.setTotal(c.getLong(c.getColumnIndex("sum(COST)")));
+                    //Log.e(c.getString(c.getColumnIndex("NAME")), c.getInt(c.getColumnIndex("sum(COST)")) + "");
+                    tours.add(t);
+                } while (c.moveToNext());
+            }
+        } finally {
+            c.close();
+        }
+        //return tourDao.queryRaw(query);
+        return tours;
     }
 
     public void addTour(Tour t){
-        tourDao.insertOrReplaceInTx(t);
+        tourDao.insertOrReplace(t);
     }
 
     public Tour getTourByName(String name){

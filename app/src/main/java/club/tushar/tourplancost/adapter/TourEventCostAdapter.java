@@ -34,14 +34,14 @@ public class TourEventCostAdapter extends RecyclerView.Adapter{
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType){
-        //RowTourDetailsBinding binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.row_tour_details, viewGroup, false);
-        return new RowTour(null);
+        RowTourDetailsBinding binding = RowTourDetailsBinding.inflate(LayoutInflater.from(context), viewGroup, false);
+        return new RowTour(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position){
         RowTour h = (RowTour) holder;
-        h.binding.tvName.setText(tours.get(position).getName());
+        h.binding.tvName.setText(tours.get(position).getEventName());
         h.binding.tvDate.setText(sdf.format(new Date(tours.get(position).getDate())));
         h.binding.tvCost.setText(tours.get(position).getCost() + "");
 
