@@ -26,6 +26,7 @@ public class Tour {
     private Long startDate;
     private Long endDate;
     private String description;
+    private Boolean synced;
 
     /** Used to resolve relations */
     @Generated
@@ -53,13 +54,14 @@ public class Tour {
     }
 
     @Generated
-    public Tour(Long id, String name, Long total, Long startDate, Long endDate, String description) {
+    public Tour(Long id, String name, Long total, Long startDate, Long endDate, String description, Boolean synced) {
         this.id = id;
         this.name = name;
         this.total = total;
         this.startDate = startDate;
         this.endDate = endDate;
         this.description = description;
+        this.synced = synced;
     }
 
     /** called by internal mechanisms, do not call yourself. */
@@ -115,6 +117,14 @@ public class Tour {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Boolean getSynced() {
+        return synced;
+    }
+
+    public void setSynced(Boolean synced) {
+        this.synced = synced;
     }
 
     /** To-many relationship, resolved on first access (and after reset). Changes to to-many relations are not persisted, make changes to the target entity. */

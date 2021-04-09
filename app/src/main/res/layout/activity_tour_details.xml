@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    android:padding="@dimen/_15sdp"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -9,35 +8,122 @@
     android:gravity="center"
     android:orientation="vertical"
     tools:context=".activity.TourDetailsActivity">
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_weight="1"
-        android:id="@+id/rv"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
 
-    <TextView
-        android:id="@+id/total"
-        android:text="BDT4000"
-        android:textColor="#000"
-        style="@style/ShapeAppearance.MaterialComponents.MediumComponent"
-        android:textStyle="bold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <EditText
-        android:hint="@string/event"
-        android:id="@+id/et_event_name"
+
+    <FrameLayout
+        android:id="@+id/root"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <EditText
-        android:hint="@string/amount"
-        android:inputType="number"
-        android:id="@+id/et_event_cost"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <Button
-        android:layout_marginTop="@dimen/_15sdp"
-        android:id="@+id/bt_save"
-        android:text="add"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_weight="1"
+            android:id="@+id/rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_gravity="bottom"
+            android:gravity="center"
+            android:background="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize">
+            <TextView
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_weight="1"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:textColor="@color/white"
+                android:text="@string/total"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_marginRight="@dimen/_15sdp"
+                android:id="@+id/total"
+                android:text="BDT4000"
+                android:textColor="#fff"
+                style="@style/ShapeAppearance.MaterialComponents.MediumComponent"
+                android:textStyle="bold"
+                android:textSize="22sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/llAddItemHolder"
+            android:background="@color/white"
+            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:paddingLeft="@dimen/_15sdp"
+                android:gravity="center|start"
+                android:background="@color/colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize">
+                <TextView
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:text="@string/add_item"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_marginRight="@dimen/_15sdp"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/tour_name"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:id="@+id/et_event_name"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_marginRight="@dimen/_15sdp"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/expense_amount"
+                android:id="@+id/et_event_cost"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+
+                    android:inputType="number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <Button
+                android:layout_marginRight="@dimen/_15sdp"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginBottom="@dimen/_15sdp"
+                android:id="@+id/bt_save"
+                android:text="add"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_marginBottom="@dimen/_60sdp"
+            android:layout_marginRight="@dimen/_16sdp"
+            android:layout_gravity="right|bottom"
+            app:backgroundTint="@color/colorPrimary"
+            app:tint="@color/white"
+            android:src="@drawable/ic_add_black_24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </FrameLayout>
 </LinearLayout>

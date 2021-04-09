@@ -14,4 +14,7 @@
     <string name="app_description">Manage and track your tour cost and expenses</string>
     <string name="login_failed">Something went wrong, could not login</string>
     <string name="expense_amount">Amount</string>
+    <string name="add_item">Add Items</string>
+    <string name="item_name">Item Name</string>
+    <string name="total">Total</string>
 </resources>

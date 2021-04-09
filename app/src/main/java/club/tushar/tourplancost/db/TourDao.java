@@ -28,6 +28,7 @@ public class TourDao extends AbstractDao<Tour, Long> {
         public final static Property StartDate = new Property(3, Long.class, "startDate", false, "START_DATE");
         public final static Property EndDate = new Property(4, Long.class, "endDate", false, "END_DATE");
         public final static Property Description = new Property(5, String.class, "description", false, "DESCRIPTION");
+        public final static Property Synced = new Property(6, Boolean.class, "synced", false, "SYNCED");
     }
 
     private DaoSession daoSession;
@@ -51,7 +52,8 @@ public class TourDao extends AbstractDao<Tour, Long> {
                 "\"TOTAL\" INTEGER," + // 2: total
                 "\"START_DATE\" INTEGER," + // 3: startDate
                 "\"END_DATE\" INTEGER," + // 4: endDate
-                "\"DESCRIPTION\" TEXT);"); // 5: description
+                "\"DESCRIPTION\" TEXT," + // 5: description
+                "\"SYNCED\" INTEGER);"); // 6: synced
     }
 
     /** Drops the underlying database table. */
@@ -93,6 +95,11 @@ public class TourDao extends AbstractDao<Tour, Long> {
         if (description != null) {
             stmt.bindString(6, description);
         }
+ 
+        Boolean synced = entity.getSynced();
+        if (synced != null) {
+            stmt.bindLong(7, synced ? 1L: 0L);
+        }
     }
 
     @Override
@@ -128,6 +135,11 @@ public class TourDao extends AbstractDao<Tour, Long> {
         if (description != null) {
             stmt.bindString(6, description);
         }
+ 
+        Boolean synced = entity.getSynced();
+        if (synced != null) {
+            stmt.bindLong(7, synced ? 1L: 0L);
+        }
     }
 
     @Override
@@ -149,7 +161,8 @@ public class TourDao extends AbstractDao<Tour, Long> {
             cursor.isNull(offset + 2) ? null : cursor.getLong(offset + 2), // total
             cursor.isNull(offset + 3) ? null : cursor.getLong(offset + 3), // startDate
             cursor.isNull(offset + 4) ? null : cursor.getLong(offset + 4), // endDate
-            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5) // description
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // description
+            cursor.isNull(offset + 6) ? null : cursor.getShort(offset + 6) != 0 // synced
         );
         return entity;
     }
@@ -162,6 +175,7 @@ public class TourDao extends AbstractDao<Tour, Long> {
         entity.setStartDate(cursor.isNull(offset + 3) ? null : cursor.getLong(offset + 3));
         entity.setEndDate(cursor.isNull(offset + 4) ? null : cursor.getLong(offset + 4));
         entity.setDescription(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setSynced(cursor.isNull(offset + 6) ? null : cursor.getShort(offset + 6) != 0);
      }
     
     @Override

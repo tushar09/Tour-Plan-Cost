@@ -33,6 +33,7 @@ public class Generator {
         tour.addLongProperty("startDate");
         tour.addLongProperty("endDate");
         tour.addStringProperty("description");
+        tour.addBooleanProperty("synced");
         return tour;
     }
 
@@ -43,6 +44,7 @@ public class Generator {
         tourCost.addStringProperty("eventName");
         Property date = tourCost.addLongProperty("date").getProperty();
         tourCost.addIntProperty("cost");
+        tourCost.addBooleanProperty("synced");
 
         ToMany tourToEvents = tour.addToMany(tourCost, tourId);
         tourToEvents.setName("TourTotalCost");
