@@ -14,6 +14,7 @@ public class SPreferences{
     protected final static String IS_AGREE = "isAgree";
     protected final static String IS_FIRST_TIME = "isFirstTime";
     protected final static String AD_TYPE = "ad_type";
+    protected final static String FIRESTORE_DATA_PULL = "firestoreDataPull";
 
     protected SharedPreferences sp;
 
@@ -88,6 +89,14 @@ public class SPreferences{
 
     public boolean isLoggedIn(){
         return sp.getBoolean(IS_LOGGED_IN, false);
+    }
+
+    public void setFirestoreDataPull(boolean b){
+        sp.edit().putBoolean(FIRESTORE_DATA_PULL, b).commit();
+    }
+
+    public boolean isFirestoreDataPullDone(){
+        return sp.getBoolean(FIRESTORE_DATA_PULL, false);
     }
 
 }

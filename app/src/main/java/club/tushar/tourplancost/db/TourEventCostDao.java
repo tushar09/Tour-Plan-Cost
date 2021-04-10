@@ -31,6 +31,7 @@ public class TourEventCostDao extends AbstractDao<TourEventCost, Long> {
         public final static Property Date = new Property(3, Long.class, "date", false, "DATE");
         public final static Property Cost = new Property(4, Integer.class, "cost", false, "COST");
         public final static Property Synced = new Property(5, Boolean.class, "synced", false, "SYNCED");
+        public final static Property IsSelected = new Property(6, Boolean.class, "isSelected", false, "IS_SELECTED");
     }
 
     private Query<TourEventCost> tour_TourTotalCostQuery;
@@ -52,7 +53,8 @@ public class TourEventCostDao extends AbstractDao<TourEventCost, Long> {
                 "\"EVENT_NAME\" TEXT," + // 2: eventName
                 "\"DATE\" INTEGER," + // 3: date
                 "\"COST\" INTEGER," + // 4: cost
-                "\"SYNCED\" INTEGER);"); // 5: synced
+                "\"SYNCED\" INTEGER," + // 5: synced
+                "\"IS_SELECTED\" INTEGER);"); // 6: isSelected
     }
 
     /** Drops the underlying database table. */
@@ -94,6 +96,11 @@ public class TourEventCostDao extends AbstractDao<TourEventCost, Long> {
         if (synced != null) {
             stmt.bindLong(6, synced ? 1L: 0L);
         }
+ 
+        Boolean isSelected = entity.getIsSelected();
+        if (isSelected != null) {
+            stmt.bindLong(7, isSelected ? 1L: 0L);
+        }
     }
 
     @Override
@@ -129,6 +136,11 @@ public class TourEventCostDao extends AbstractDao<TourEventCost, Long> {
         if (synced != null) {
             stmt.bindLong(6, synced ? 1L: 0L);
         }
+ 
+        Boolean isSelected = entity.getIsSelected();
+        if (isSelected != null) {
+            stmt.bindLong(7, isSelected ? 1L: 0L);
+        }
     }
 
     @Override
@@ -144,7 +156,8 @@ public class TourEventCostDao extends AbstractDao<TourEventCost, Long> {
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // eventName
             cursor.isNull(offset + 3) ? null : cursor.getLong(offset + 3), // date
             cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4), // cost
-            cursor.isNull(offset + 5) ? null : cursor.getShort(offset + 5) != 0 // synced
+            cursor.isNull(offset + 5) ? null : cursor.getShort(offset + 5) != 0, // synced
+            cursor.isNull(offset + 6) ? null : cursor.getShort(offset + 6) != 0 // isSelected
         );
         return entity;
     }
@@ -157,6 +170,7 @@ public class TourEventCostDao extends AbstractDao<TourEventCost, Long> {
         entity.setDate(cursor.isNull(offset + 3) ? null : cursor.getLong(offset + 3));
         entity.setCost(cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4));
         entity.setSynced(cursor.isNull(offset + 5) ? null : cursor.getShort(offset + 5) != 0);
+        entity.setIsSelected(cursor.isNull(offset + 6) ? null : cursor.getShort(offset + 6) != 0);
      }
     
     @Override

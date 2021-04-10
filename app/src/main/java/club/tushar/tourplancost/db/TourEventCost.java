@@ -20,6 +20,7 @@ public class TourEventCost {
     private Long date;
     private Integer cost;
     private Boolean synced;
+    private Boolean isSelected;
 
     // KEEP FIELDS - put your custom fields here
     // KEEP FIELDS END
@@ -33,13 +34,14 @@ public class TourEventCost {
     }
 
     @Generated
-    public TourEventCost(Long id, Long tourId, String eventName, Long date, Integer cost, Boolean synced) {
+    public TourEventCost(Long id, Long tourId, String eventName, Long date, Integer cost, Boolean synced, Boolean isSelected) {
         this.id = id;
         this.tourId = tourId;
         this.eventName = eventName;
         this.date = date;
         this.cost = cost;
         this.synced = synced;
+        this.isSelected = isSelected;
     }
 
     public Long getId() {
@@ -88,6 +90,14 @@ public class TourEventCost {
 
     public void setSynced(Boolean synced) {
         this.synced = synced;
+    }
+
+    public Boolean getIsSelected() {
+        return isSelected;
+    }
+
+    public void setIsSelected(Boolean isSelected) {
+        this.isSelected = isSelected;
     }
 
     // KEEP METHODS - put your custom methods here

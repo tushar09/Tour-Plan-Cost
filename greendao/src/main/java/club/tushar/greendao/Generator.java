@@ -8,7 +8,7 @@ import org.greenrobot.greendao.generator.ToMany;
 
 public class Generator {
     public static void main(String [] args){
-        Schema schema = new Schema(6, "club.tushar.tourplancost.db"); // Your app package name and the (.db) is the folder where the DAO files will be generated into.
+        Schema schema = new Schema(7, "club.tushar.tourplancost.db"); // Your app package name and the (.db) is the folder where the DAO files will be generated into.
         schema.enableKeepSectionsByDefault();
 
         addTables(schema);
@@ -45,6 +45,7 @@ public class Generator {
         Property date = tourCost.addLongProperty("date").getProperty();
         tourCost.addIntProperty("cost");
         tourCost.addBooleanProperty("synced");
+        tourCost.addBooleanProperty("isSelected");
 
         ToMany tourToEvents = tour.addToMany(tourCost, tourId);
         tourToEvents.setName("TourTotalCost");

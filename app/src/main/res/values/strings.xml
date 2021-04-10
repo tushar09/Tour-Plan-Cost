@@ -17,4 +17,6 @@
     <string name="add_item">Add Items</string>
     <string name="item_name">Item Name</string>
     <string name="total">Total</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 </resources>

@@ -32,22 +32,9 @@ public class DbHelper {
 
 
     public List<Tour> getTourList(){
-        //QueryBuilder<Tour> qb = tourDao.queryBuilder();
-        //qb.join(TourEventCost.class, TourEventCostDao.Properties.TourId);
-        //qb.and(WrongAnswersDao.Properties.FlowId.eq(flowId));
-        //return qb.list();
-        //String query = " LEFT JOIN TOUR_EVENT_COST ON T._id = TOUR_EVENT_COST.TOUR_ID";
-        //String query = "SELECT " + TourDao.Properties.Name.columnName + " FROM " + TourDao.TABLENAME + "  LEFT JOIN TOUR_EVENT_COST ON " + TourDao.Properties.Id.columnName + " = " + TourEventCostDao.Properties.TourId.columnName;
-        //String query = "SELECT *, a._id as iddd, sum(" + TourEventCostDao.Properties.Cost.columnName + ")" + " FROM " + TourDao.TABLENAME + " a  LEFT JOIN TOUR_EVENT_COST ON a." + TourDao.Properties.Id.columnName + " = " + TourEventCostDao.Properties.TourId.columnName;
         String query = "SELECT *,sum(COST),  a._id as iddd  FROM TOUR a left join TOUR_EVENT_COST on TOUR_ID = a._id  group by NAME";
-        Log.e("quesr", query);
         Cursor c = daoSession.getDatabase().rawQuery(query, null);
-        for (int i = 0; i < c.getColumnNames().length; i++) {
-            Log.e("name", c.getColumnName(i));
-        }
-
         List<Tour> tours = new ArrayList<>();
-
         try{
             if (c.moveToFirst()) {
                 do {
@@ -56,7 +43,6 @@ public class DbHelper {
                     t.setName(c.getString(c.getColumnIndex("NAME")));
                     t.setStartDate(c.getLong(c.getColumnIndex("START_DATE")));
                     t.setTotal(c.getLong(c.getColumnIndex("sum(COST)")));
-                    //Log.e(c.getString(c.getColumnIndex("NAME")), c.getInt(c.getColumnIndex("sum(COST)")) + "");
                     tours.add(t);
                 } while (c.moveToNext());
             }
@@ -67,13 +53,34 @@ public class DbHelper {
         return tours;
     }
 
-    public void addTour(Tour t){
-        tourDao.insertOrReplace(t);
+    public void updateTour(Tour t){
+        tourDao.update(t);
+    }
+
+    public List<Tour> getTourListNotSynced(){
+        QueryBuilder<Tour> qb = tourDao.queryBuilder();
+        return qb.where(TourDao.Properties.Synced.eq(0)).list();
+    }
+
+    public long addTour(Tour t){
+        return tourDao.insertOrReplace(t);
     }
 
     public Tour getTourByName(String name){
         QueryBuilder<Tour> qb = tourDao.queryBuilder();
         return qb.where(TourDao.Properties.Name.eq(name)).unique();
+    }
+
+    public Tour getTourById(long id){
+        QueryBuilder<Tour> qb = tourDao.queryBuilder();
+        return qb.where(TourDao.Properties.Id.eq(id)).unique();
+    }
+
+    public void setTourSyncFalseById(long id){
+        QueryBuilder<Tour> qb = tourDao.queryBuilder();
+        Tour t = qb.where(TourDao.Properties.Id.eq(id)).unique();
+        t.setSynced(false);
+        tourDao.update(t);
     }
 
     public List<TourEventCost> getTourEventCosts(long id){
@@ -87,4 +94,15 @@ public class DbHelper {
         tourEventCostDao.insertOrReplaceInTx(cost);
     }
 
+    public void addTourEventCostList(List<TourEventCost> cost){
+        tourEventCostDao.insertOrReplaceInTx(cost);
+    }
+
+    public void updateTourEventCost(TourEventCost cost){
+        tourEventCostDao.update(cost);
+    }
+
+    public void deleteTourEventCost(TourEventCost cost){
+        tourEventCostDao.delete(cost);
+    }
 }

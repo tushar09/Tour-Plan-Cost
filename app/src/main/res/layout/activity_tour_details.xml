@@ -64,6 +64,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize">
                 <TextView
+                    android:id="@+id/tvTitle"
                     android:textStyle="bold"
                     android:textColor="@color/white"
                     android:text="@string/add_item"
