@@ -11,7 +11,7 @@
     <string name="cancel">Cancel</string>
     <string name="add_tour">Add Expense</string>
     <string name="login_google">Login With Google</string>
-    <string name="app_description">Manage and track your tour cost and expenses</string>
+    <string name="app_description">Manage and track your monthly expenses. You can synchronize your data to multiple device</string>
     <string name="login_failed">Something went wrong, could not login</string>
     <string name="expense_amount">Amount</string>
     <string name="add_item">Add Items</string>
