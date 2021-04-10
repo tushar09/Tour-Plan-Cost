@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Tour Plan &amp; Cost</string>
+    <string name="app_name">Simple Expense Manager</string>
     <string name="save">Save</string>
     <string name="event">Item Name</string>
     <string name="amount">Amount</string>
