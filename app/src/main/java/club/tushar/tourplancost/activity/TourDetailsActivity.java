@@ -16,6 +16,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.transition.MaterialArcMotion;
 import com.google.android.material.transition.MaterialContainerTransform;
@@ -68,9 +70,23 @@ public class TourDetailsActivity extends AppCompatActivity {
         binding.btSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!binding.etEventName.getEditText().getText().toString().equals("") && !binding.etEventCost.getEditText().getText().toString().equals("")){
 
+                if(binding.etEventName.getEditText().getText().toString().equals("")){
+                    YoYo.with(Techniques.Shake)
+                            .duration(700)
+                            .repeat(0)
+                            .playOn(binding.etEventName);
+                    return;
                 }
+
+                if(binding.etEventCost.getEditText().getText().toString().equals("")){
+                    YoYo.with(Techniques.Shake)
+                            .duration(700)
+                            .repeat(0)
+                            .playOn(binding.etEventCost);
+                    return;
+                }
+
                 TourEventCost cost = new TourEventCost();
                 cost.setCost(Integer.parseInt(binding.etEventCost.getEditText().getText().toString()));
                 cost.setEventName(binding.etEventName.getEditText().getText().toString());
@@ -86,7 +102,7 @@ public class TourDetailsActivity extends AppCompatActivity {
                 }
                 binding.total.setText(money + "");
                 binding.etEventCost.getEditText().setText("");
-                binding.etEventCost.getEditText().requestFocus();
+                binding.etEventName.getEditText().requestFocus();
                 binding.etEventName.getEditText().setText("");
                 editItem();
             }

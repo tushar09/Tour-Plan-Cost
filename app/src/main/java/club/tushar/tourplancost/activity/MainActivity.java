@@ -14,7 +14,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -119,13 +122,35 @@ public class MainActivity extends AppCompatActivity {
     private void addTour(){
         final Tour t = Constant.getDbHelper(this).getTourByName(getMonth());
         final AddTourDialogBinding addTourDialogBinding = AddTourDialogBinding.inflate(getLayoutInflater());
-        AlertDialog builder = new MaterialAlertDialogBuilder(this,
+        AlertDialog dialog = new MaterialAlertDialogBuilder(this,
                 R.style.AlertDialogTheme)
                 .setView(addTourDialogBinding.getRoot())
                 .setTitle(R.string.add_tour)
-                .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.add, null) //Set to null. We override the onclick
+                .setNegativeButton(android.R.string.cancel, null)
+                .create();
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                Button button = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
+                button.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                    public void onClick(View view) {
+                        if(addTourDialogBinding.etExpenseName.getEditText().getText().toString().equals("")){
+                            YoYo.with(Techniques.Shake)
+                                    .duration(700)
+                                    .repeat(0)
+                                    .playOn(addTourDialogBinding.etExpenseName);
+                            return;
+                        }
+
+                        if(addTourDialogBinding.etExpenseAmount.getEditText().getText().toString().equals("")){
+                            YoYo.with(Techniques.Shake)
+                                    .duration(700)
+                                    .repeat(0)
+                                    .playOn(addTourDialogBinding.etExpenseAmount);
+                            return;
+                        }
 
                         TourEventCost cost = new TourEventCost();
                         cost.setCost(Integer.parseInt(addTourDialogBinding.etExpenseAmount.getEditText().getText().toString()));
@@ -136,15 +161,12 @@ public class MainActivity extends AppCompatActivity {
                         t.setSynced(false);
                         Constant.getDbHelper(MainActivity.this).updateTour(t);
                         setTourList();
+                        dialog.dismiss();
                     }
-                })
-                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                    }
-                })
-                .show();
+                });
+            }
+        });
+        dialog.show();
     }
     private String getMonth(){
         Date c = Calendar.getInstance().getTime();

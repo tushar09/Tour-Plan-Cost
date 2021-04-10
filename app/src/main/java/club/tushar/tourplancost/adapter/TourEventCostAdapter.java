@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,8 @@ import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.lang.reflect.Field;
@@ -117,31 +120,47 @@ public class TourEventCostAdapter extends RecyclerView.Adapter{
         final AddTourDialogBinding addTourDialogBinding = AddTourDialogBinding.inflate(LayoutInflater.from(context));
         addTourDialogBinding.etExpenseName.getEditText().setText(tourEventCost.getEventName());
         addTourDialogBinding.etExpenseAmount.getEditText().setText(tourEventCost.getCost() + "");
-        AlertDialog builder = new MaterialAlertDialogBuilder(context,
+        AlertDialog dialog = new MaterialAlertDialogBuilder(context,
                 R.style.AlertDialogTheme)
                 .setView(addTourDialogBinding.getRoot())
                 .setTitle("Edit " + tourEventCost.getEventName())
-                .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.save, null)
+                .setNegativeButton(R.string.cancel, null).create();
+        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialogInterface) {
+                Button button = ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE);
+                button.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        if(addTourDialogBinding.etExpenseName.getEditText().toString().equals("")){
+                    public void onClick(View view) {
+                        if(addTourDialogBinding.etExpenseName.getEditText().getText().toString().equals("")){
+                            YoYo.with(Techniques.Shake)
+                                    .duration(700)
+                                    .repeat(0)
+                                    .playOn(addTourDialogBinding.etExpenseName);
                             return;
                         }
+
+                        if(addTourDialogBinding.etExpenseAmount.getEditText().getText().toString().equals("")){
+                            YoYo.with(Techniques.Shake)
+                                    .duration(700)
+                                    .repeat(0)
+                                    .playOn(addTourDialogBinding.etExpenseAmount);
+                            return;
+                        }
+
                         tourEventCost.setEventName(addTourDialogBinding.etExpenseName.getEditText().getText().toString());
                         tourEventCost.setCost(Integer.parseInt(addTourDialogBinding.etExpenseAmount.getEditText().getText().toString()));
                         Constant.getDbHelper(context).updateTourEventCost(tourEventCost);
                         Constant.getDbHelper(context).setTourSyncFalseById(tourEventCost.getTourId());
                         notifyDataSetChanged();
                         ((TourDetailsActivity)context).editItem();
+                        dialog.dismiss();
                     }
-                })
-                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                    }
-                })
-                .show();
+                });
+            }
+        });
+        dialog.show();
     }
 
     private void deleteItem(TourEventCost tourEventCost) {
