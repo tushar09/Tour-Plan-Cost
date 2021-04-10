@@ -10,16 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/MaterialTheme">
         <activity android:name=".activity.LoginActivity"></activity>
-        <activity android:name=".activity.StarterActivity">
+
+        <activity android:name=".activity.TourDetailsActivity" />
+        <activity android:name=".activity.AddTourActivity" />
+        <activity android:name=".activity.MainActivity"
+            android:theme="@style/MaterialTheme.AppThemeLogo">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".activity.TourDetailsActivity" />
-        <activity android:name=".activity.AddTourActivity" />
-        <activity android:name=".activity.MainActivity">
         </activity>
     </application>
 

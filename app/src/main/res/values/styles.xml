@@ -16,6 +16,12 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="MaterialTheme.AppThemeLogo" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowBackground">@drawable/starter</item>
+    </style>
+
     <style name="AlertDialogTheme" parent="Theme.MaterialComponents.Light.Dialog.Alert">
         <item name="buttonBarPositiveButtonStyle">@style/Alert.Button.Positive</item>
         <item name="buttonBarNegativeButtonStyle">@style/Alert.Button.Positive</item>

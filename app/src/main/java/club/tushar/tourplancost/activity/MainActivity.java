@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -54,10 +55,21 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.MaterialTheme);
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        if(Constant.getSharedPreferences(this).isLoggedIn()){
+            start();
+        }else {
+            startActivity(new Intent(this, LoginActivity.class));
+            finishAffinity();
+        }
+
+    }
+
+    private void start(){
         db = FirebaseFirestore.getInstance();
 
         binding.fab.setOnClickListener(new View.OnClickListener() {
