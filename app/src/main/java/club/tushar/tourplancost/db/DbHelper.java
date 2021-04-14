@@ -87,7 +87,7 @@ public class DbHelper {
         QueryBuilder<TourEventCost> qb = tourEventCostDao.queryBuilder();
         //qb.and(WrongAnswersDao.Properties.FlowId.eq(flowId));
         //return qb.list();
-        return qb.where(TourEventCostDao.Properties.TourId.eq(id)).orderDesc(TourEventCostDao.Properties.Id).list();
+        return qb.where(TourEventCostDao.Properties.TourId.eq(id)).orderDesc(TourEventCostDao.Properties.Date).list();
     }
 
     public void addTourEventCost(TourEventCost cost){
