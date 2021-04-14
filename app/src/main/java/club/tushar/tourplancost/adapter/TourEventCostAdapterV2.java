@@ -43,7 +43,7 @@ public class TourEventCostAdapterV2 extends StickyAdapter<RecyclerView.ViewHolde
     public TourEventCostAdapterV2(Context context, List<TourDetails> tours) {
         this.context = context;
         this.tours = tours;
-        sdf = new SimpleDateFormat("dd MMM hh:mm aa");
+        sdf = new SimpleDateFormat("EEE hh:mm aa");
     }
 
     @Override
@@ -87,6 +87,7 @@ public class TourEventCostAdapterV2 extends StickyAdapter<RecyclerView.ViewHolde
             h.binding.tvName.setText(position + " view " + getItemViewType(position));
             h.binding.tvName.setText(tours.get(position).getTourEventCost().getEventName());
             h.binding.tvDate.setText(tours.get(position).getDate());
+
             h.binding.tvCost.setText(tours.get(position).getTourEventCost().getCost() + "");
 
             h.binding.getRoot().setOnClickListener(new View.OnClickListener() {
@@ -240,3 +241,6 @@ public class TourEventCostAdapterV2 extends StickyAdapter<RecyclerView.ViewHolde
         }
     }
 }
+
+
+//[{"cost":10200,"date":1618331968057,"eventName":"house rent","id":32,"tourId":1},{"cost":40,"date":1618331941105,"eventName":"muri","id":31,"tourId":1},{"cost":55,"date":1618331921458,"eventName":"soya sos","id":30,"tourId":1},{"cost":125,"date":1618331904725,"eventName":"coke","id":29,"tourId":1},{"cost":320,"date":1618331891995,"eventName":"water filter","id":28,"tourId":1},{"cost":80,"date":1618331848989,"eventName":"vegeatble","id":27,"tourId":1},{"cost":310,"date":1618331831662,"eventName":"groceries","id":26,"tourId":1},{"cost":400,"date":1618329361512,"eventName":"chicken","id":25,"tourId":1},{"cost":100,"date":1618071372199,"eventName":"pineapple","id":24,"tourId":1},{"cost":2500,"date":1618071310876,"eventName":"dress","id":23,"tourId":1},{"cost":510,"date":1618071269257,"eventName":"sultans dine","id":22,"tourId":1},{"cost":1371,"date":1618071107819,"eventName":"chaldal","id":21,"tourId":1},{"cost":1500,"date":1618070965329,"eventName":"bazar","id":20,"tourId":1},{"cost":700,"date":1618070910158,"eventName":"buya","id":19,"tourId":1},{"cost":445,"date":1618060709699,"eventName":"milk","id":18,"tourId":1},{"cost":600,"date":1618060701262,"eventName":"net bill","id":17,"tourId":1},{"cost":10,"date":1618060686567,"eventName":"morich","id":16,"tourId":1},{"cost":530,"date":1618060665339,"eventName":"medic","id":15,"tourId":1}]

@@ -37,12 +37,22 @@ public class Constant{
     }
 
     public static String dateToLongWithYear(long date){
-        SimpleDateFormat f = new SimpleDateFormat("dd MMMM yyyy");
+        SimpleDateFormat f = new SimpleDateFormat("dd MMM EEE");
+        return f.format(date);
+    }
+
+    public static String dateToLongWithYearV2(long date){
+        SimpleDateFormat f = new SimpleDateFormat("hh:mm a");
         return f.format(date);
     }
 
     public static String longToDate(long date){
         SimpleDateFormat f = new SimpleDateFormat("dd/MM/yyyy");
+        return f.format(date);
+    }
+
+    public static String longToAmPm(long date){
+        SimpleDateFormat f = new SimpleDateFormat("hh:mm a");
         return f.format(date);
     }
 

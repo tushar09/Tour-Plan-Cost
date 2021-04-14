@@ -147,7 +147,7 @@ public class TourDetailsActivity extends AppCompatActivity {
             list.add(mainList.get(i));
             map.put(date, list);
 
-            Log.e("day", Constant.compareDate(mainList.get(i).getDate()) + " " + new Random().nextInt());
+            //Log.e("day", Constant.compareDate(mainList.get(i).getDate()) + " " + new Random().nextInt());
         }
 
         int sectionPosition = 0;
@@ -168,7 +168,7 @@ public class TourDetailsActivity extends AppCompatActivity {
             for (int i = 0; i < entry.getValue().size(); i++) {
                 total += entry.getValue().get(i).getCost();
                 TourDetails tourDetails1 = new TourDetails();
-                tourDetails1.setDate(entry.getKey());
+                tourDetails1.setDate(Constant.longToAmPm(entry.getValue().get(i).getDate()));
                 tourDetails1.setViewType(1);
 
                 tourDetails1.setSectionPosition(sectionPosition);
