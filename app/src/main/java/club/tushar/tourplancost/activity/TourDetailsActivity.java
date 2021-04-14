@@ -1,20 +1,18 @@
 package club.tushar.tourplancost.activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.transition.Transition;
-import androidx.transition.TransitionListenerAdapter;
-import androidx.transition.TransitionManager;
-
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.transition.Transition;
+import androidx.transition.TransitionListenerAdapter;
+import androidx.transition.TransitionManager;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -25,17 +23,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
-import com.shuhart.stickyheader.StickyHeaderItemDecorator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
+import club.tushar.tourplancost.views.StickyHeaderItemDecorator;
 import club.tushar.tourplancost.adapter.TourEventCostAdapter;
-import club.tushar.tourplancost.adapter.TourEventCostAdapterV2;
 import club.tushar.tourplancost.databinding.ActivityTourDetailsBinding;
 import club.tushar.tourplancost.db.Tour;
 import club.tushar.tourplancost.db.TourEventCost;
@@ -61,6 +57,7 @@ public class TourDetailsActivity extends AppCompatActivity {
         id = getIntent().getLongExtra("id", 0);
         List<TourEventCost> list = Constant.getDbHelper(TourDetailsActivity.this).getTourEventCosts(id);
 
+        getSupportActionBar().setElevation(0);
         getSupportActionBar().setTitle(getIntent().getStringExtra("name"));
 
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -69,10 +66,9 @@ public class TourDetailsActivity extends AppCompatActivity {
 //        DividerItemDecoration dividerDecorator = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
 //        binding.rv.addItemDecoration(dividerDecorator);
 
-        TourEventCostAdapterV2 adapter = new TourEventCostAdapterV2(this, finalList);
+        TourEventCostAdapter adapter = new TourEventCostAdapter(this, finalList);
         StickyHeaderItemDecorator decorator = new StickyHeaderItemDecorator(adapter);
         decorator.attachToRecyclerView(binding.rv);
-        //binding.rv.addItemDecoration(decorator);
         binding.rv.setAdapter(adapter);
         populateData(list);
 
@@ -146,8 +142,6 @@ public class TourDetailsActivity extends AppCompatActivity {
             }
             list.add(mainList.get(i));
             map.put(date, list);
-
-            //Log.e("day", Constant.compareDate(mainList.get(i).getDate()) + " " + new Random().nextInt());
         }
 
         int sectionPosition = 0;
