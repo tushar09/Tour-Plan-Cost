@@ -15,38 +15,44 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_weight="1"
-            android:id="@+id/rv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
         <LinearLayout
-            android:orientation="horizontal"
-            android:layout_gravity="bottom"
-            android:gravity="center"
-            android:background="@color/colorPrimary"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="?actionBarSize">
-            <TextView
-                style="@style/TextAppearance.AppCompat.Medium"
+            android:layout_height="match_parent">
+            <androidx.recyclerview.widget.RecyclerView
                 android:layout_weight="1"
-                android:layout_marginLeft="@dimen/_15sdp"
-                android:textColor="@color/white"
-                android:text="@string/total"
+                android:id="@+id/rv"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:layout_marginRight="@dimen/_15sdp"
-                android:id="@+id/total"
-                android:text="BDT4000"
-                android:textColor="#fff"
-                style="@style/ShapeAppearance.MaterialComponents.MediumComponent"
-                android:textStyle="bold"
-                android:textSize="22sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="match_parent"/>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_gravity="bottom"
+                android:gravity="center"
+                android:background="@color/colorPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize">
+                <TextView
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="@dimen/_15sdp"
+                    android:textColor="@color/white"
+                    android:text="@string/total"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:layout_marginRight="@dimen/_15sdp"
+                    android:id="@+id/total"
+                    android:text="BDT4000"
+                    android:textColor="#fff"
+                    style="@style/ShapeAppearance.MaterialComponents.MediumComponent"
+                    android:textStyle="bold"
+                    android:textSize="22sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
         </LinearLayout>
+
 
         <LinearLayout
             android:visibility="gone"

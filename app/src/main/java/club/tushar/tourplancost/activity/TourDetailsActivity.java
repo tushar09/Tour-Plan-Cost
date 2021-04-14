@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.transition.Transition;
 import androidx.transition.TransitionListenerAdapter;
@@ -11,7 +12,6 @@ import androidx.transition.TransitionManager;
 
 import android.graphics.Color;
 import android.os.AsyncTask;
-import android.os.Binder;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,16 +25,21 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
+import com.shuhart.stickyheader.StickyHeaderItemDecorator;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
-import club.tushar.tourplancost.R;
-import club.tushar.tourplancost.adapter.TourAdapter;
 import club.tushar.tourplancost.adapter.TourEventCostAdapter;
+import club.tushar.tourplancost.adapter.TourEventCostAdapterV2;
 import club.tushar.tourplancost.databinding.ActivityTourDetailsBinding;
 import club.tushar.tourplancost.db.Tour;
 import club.tushar.tourplancost.db.TourEventCost;
+import club.tushar.tourplancost.model.TourDetails;
 import club.tushar.tourplancost.utils.Constant;
 
 public class TourDetailsActivity extends AppCompatActivity {
@@ -43,6 +48,7 @@ public class TourDetailsActivity extends AppCompatActivity {
     private Long id = 0L;
 
     private FirebaseFirestore db;
+    private List<TourDetails> finalList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,14 +59,24 @@ public class TourDetailsActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
 
         id = getIntent().getLongExtra("id", 0);
+        List<TourEventCost> list = Constant.getDbHelper(TourDetailsActivity.this).getTourEventCosts(id);
+
         getSupportActionBar().setTitle(getIntent().getStringExtra("name"));
 
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         binding.rv.setLayoutManager(linearLayoutManager);
-        binding.rv.setAdapter(new TourEventCostAdapter(this, Constant.getDbHelper(this).getTourEventCosts(id)));
 
-        List<TourEventCost> list = Constant.getDbHelper(TourDetailsActivity.this).getTourEventCosts(id);
-        binding.rv.setAdapter(new TourEventCostAdapter(TourDetailsActivity.this, list));
+//        DividerItemDecoration dividerDecorator = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+//        binding.rv.addItemDecoration(dividerDecorator);
+
+        TourEventCostAdapterV2 adapter = new TourEventCostAdapterV2(this, finalList);
+        StickyHeaderItemDecorator decorator = new StickyHeaderItemDecorator(adapter);
+        decorator.attachToRecyclerView(binding.rv);
+        //binding.rv.addItemDecoration(decorator);
+        binding.rv.setAdapter(adapter);
+        populateData(list);
+
+        //binding.rv.setAdapter(new TourEventCostAdapter(TourDetailsActivity.this, list));
         int money = 0;
         for (int i = 0; i < list.size(); i++) {
             money += list.get(i).getCost();
@@ -95,7 +111,7 @@ public class TourDetailsActivity extends AppCompatActivity {
                 Constant.getDbHelper(TourDetailsActivity.this).addTourEventCost(cost);
                 Constant.getDbHelper(TourDetailsActivity.this).setTourSyncFalseById(id);
                 List<TourEventCost> list = Constant.getDbHelper(TourDetailsActivity.this).getTourEventCosts(id);
-                binding.rv.setAdapter(new TourEventCostAdapter(TourDetailsActivity.this, list));
+                populateData(list);
                 int money = 0;
                 for (int i = 0; i < list.size(); i++) {
                     money += list.get(i).getCost();
@@ -114,6 +130,61 @@ public class TourDetailsActivity extends AppCompatActivity {
                 showEndView(view, binding.llAddItemHolder);
             }
         });
+    }
+
+    public void populateData(List<TourEventCost> mainList) {
+        LinkedHashMap<String, List<TourEventCost>> map = new LinkedHashMap<>();
+        finalList.clear();
+
+        for (int i = 0; i < mainList.size(); i++) {
+            String date = Constant.compareDate(mainList.get(i).getDate());
+            List<TourEventCost> list;
+            if(map.containsKey(date)){
+                list = map.get(date);
+            }else {
+                list = new ArrayList<>();
+            }
+            list.add(mainList.get(i));
+            map.put(date, list);
+
+            Log.e("day", Constant.compareDate(mainList.get(i).getDate()) + " " + new Random().nextInt());
+        }
+
+        int sectionPosition = 0;
+        for (Map.Entry<String, List<TourEventCost>> entry : map.entrySet()) {
+
+            int total = 0;
+
+            TourDetails tourDetails = new TourDetails();
+            tourDetails.setDate(entry.getKey());
+            tourDetails.setViewType(0);
+            tourDetails.setTotal(total);
+            tourDetails.setSectionPosition(sectionPosition);
+            finalList.add(tourDetails);
+            sectionPosition = finalList.indexOf(tourDetails);
+            tourDetails.setSectionPosition(sectionPosition);
+
+
+            for (int i = 0; i < entry.getValue().size(); i++) {
+                total += entry.getValue().get(i).getCost();
+                TourDetails tourDetails1 = new TourDetails();
+                tourDetails1.setDate(entry.getKey());
+                tourDetails1.setViewType(1);
+
+                tourDetails1.setSectionPosition(sectionPosition);
+                TourEventCost tc = entry.getValue().get(i);
+                tourDetails1.setTourEventCost(tc);
+
+                finalList.add(tourDetails1);
+            }
+
+            tourDetails.setTotal(total);
+
+            Log.e(entry.getKey(), entry.getValue().size() + "");
+        }
+
+        binding.rv.getAdapter().notifyDataSetChanged();
+        updateCount();
     }
 
     public void editItem(){

@@ -70,4 +70,6 @@ dependencies {
     implementation 'com.google.android.material:material:1.4.0-alpha01'
 
     implementation 'com.daimajia.androidanimations:library:2.4@aar'
+
+    implementation 'com.github.shuhart:stickyheader:1.1.0'
 }
