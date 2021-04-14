@@ -186,25 +186,28 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... strings) {
-            List<Tour> list = Constant.getDbHelper(MainActivity.this).getTourListNotSynced();
-            DocumentReference d = db.collection(Constant.FIRESTORE_MAIN_COLLECTION).document(FirebaseAuth.getInstance().getCurrentUser().getEmail());
-            for (int i = 0; i < list.size(); i++) {
-                Tour t = list.get(i);
-                HashMap<String, String> data = new HashMap<>();
-                List<TourEventCost> tourEventCosts = Constant.getDbHelper(MainActivity.this).getTourEventCosts(t.getId());
-                if(tourEventCosts.size() != 0){
-                    data.put(t.getName(), new Gson().toJson(tourEventCosts));
-                    d.set(data)
-                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    t.setSynced(true);
-                                    Constant.getDbHelper(MainActivity.this).updateTour(t);
-                                }
-                            });
-                }
+            if(Constant.getSharedPreferences(MainActivity.this).isFirestoreDataPullDone()){
+                List<Tour> list = Constant.getDbHelper(MainActivity.this).getTourListNotSynced();
+                DocumentReference d = db.collection(Constant.FIRESTORE_MAIN_COLLECTION).document(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                for (int i = 0; i < list.size(); i++) {
+                    Tour t = list.get(i);
+                    HashMap<String, String> data = new HashMap<>();
+                    List<TourEventCost> tourEventCosts = Constant.getDbHelper(MainActivity.this).getTourEventCosts(t.getId());
+                    if(tourEventCosts.size() != 0){
+                        data.put(t.getName(), new Gson().toJson(tourEventCosts));
+                        d.set(data)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        t.setSynced(true);
+                                        Constant.getDbHelper(MainActivity.this).updateTour(t);
+                                    }
+                                });
+                    }
 
+                }
             }
+
             return null;
         }
     }
@@ -228,7 +231,6 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             setTourList();
-            Constant.getSharedPreferences(MainActivity.this).setFirestoreDataPull(true);
             progressDialog.dismiss();
         }
 
@@ -246,27 +248,42 @@ public class MainActivity extends AppCompatActivity {
             d.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        Map<String, Object> map = document.getData();
-                        for (Map.Entry<String, Object> entry : map.entrySet()) {
-                            List<TourEventCost> list = new Gson().fromJson(entry.getValue().toString(), new TypeToken<List<TourEventCost>>(){}.getType());
-                            Log.e(entry.getKey(), entry.getValue().toString());
-                            Tour t = new Tour();
-                            t.setSynced(true);
-                            t.setName(entry.getKey());
-                            t.setDescription("");
-                            t.setStartDate(Constant.dateToLong(entry.getKey()));
-                            t.setId(list.get(0).getTourId());
-                            Constant.getDbHelper(MainActivity.this).addTour(t);
-                            Constant.getDbHelper(MainActivity.this).addTourEventCostList(list);
-                            publishProgress();
+                    try {
+                        DocumentSnapshot document = task.getResult();
+                        //List<Tour> = Constant.getDbHelper(MainActivity.this).getTourList();
+
+
+                        if (document.exists()) {
+                            Map<String, Object> map = document.getData();
+                            for (Map.Entry<String, Object> entry : map.entrySet()) {
+                                List<TourEventCost> listOnline = new Gson().fromJson(entry.getValue().toString(), new TypeToken<List<TourEventCost>>(){}.getType());
+                                List<TourEventCost> listOffLine = Constant.getDbHelper(MainActivity.this).getTourEventCosts(listOnline.get(0).getTourId());
+                                for (int i = 0; i < listOnline.size(); i++) {
+                                    listOnline.get(i).setId(null);
+                                }
+                                Tour t = new Tour();
+                                t.setSynced(true);
+                                t.setName(entry.getKey());
+                                t.setDescription("");
+                                t.setStartDate(Constant.dateToLong(entry.getKey()));
+                                t.setId(listOnline.get(0).getTourId());
+                                Constant.getDbHelper(MainActivity.this).addTour(t);
+                                Constant.getDbHelper(MainActivity.this).addTourEventCostList(listOnline);
+                                for (int i = 0; i < listOffLine.size(); i++) {
+                                    listOffLine.get(i).setId(null);
+                                }
+                                Constant.getDbHelper(MainActivity.this).addTourEventCostList(listOffLine);
+                                publishProgress();
+                            }
+                            Constant.getSharedPreferences(MainActivity.this).setFirestoreDataPull(true);
+
+                        } else {
+                            Log.e("pull", "No such document");
                         }
+                    }catch (Exception e){
 
-
-                    } else {
-                        Log.e("pull", "No such document");
                     }
+
                 }
             });
             return null;

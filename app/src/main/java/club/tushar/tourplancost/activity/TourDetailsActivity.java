@@ -234,25 +234,28 @@ public class TourDetailsActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... strings) {
-            List<Tour> list = Constant.getDbHelper(TourDetailsActivity.this).getTourListNotSynced();
-            DocumentReference d = db.collection(Constant.FIRESTORE_MAIN_COLLECTION).document(FirebaseAuth.getInstance().getCurrentUser().getEmail());
-            for (int i = 0; i < list.size(); i++) {
-                Tour t = list.get(i);
-                HashMap<String, String> data = new HashMap<>();
-                List<TourEventCost> tourEventCosts = Constant.getDbHelper(TourDetailsActivity.this).getTourEventCosts(t.getId());
-                if(tourEventCosts.size() != 0){
-                    data.put(t.getName(), new Gson().toJson(tourEventCosts));
-                    d.set(data)
-                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    t.setSynced(true);
-                                    Constant.getDbHelper(TourDetailsActivity.this).updateTour(t);
-                                }
-                            });
-                }
+            if(Constant.getSharedPreferences(TourDetailsActivity.this).isFirestoreDataPullDone()){
+                List<Tour> list = Constant.getDbHelper(TourDetailsActivity.this).getTourListNotSynced();
+                DocumentReference d = db.collection(Constant.FIRESTORE_MAIN_COLLECTION).document(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                for (int i = 0; i < list.size(); i++) {
+                    Tour t = list.get(i);
+                    HashMap<String, String> data = new HashMap<>();
+                    List<TourEventCost> tourEventCosts = Constant.getDbHelper(TourDetailsActivity.this).getTourEventCosts(t.getId());
+                    if(tourEventCosts.size() != 0){
+                        data.put(t.getName(), new Gson().toJson(tourEventCosts));
+                        d.set(data)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        t.setSynced(true);
+                                        Constant.getDbHelper(TourDetailsActivity.this).updateTour(t);
+                                    }
+                                });
+                    }
 
+                }
             }
+
             return null;
         }
     }

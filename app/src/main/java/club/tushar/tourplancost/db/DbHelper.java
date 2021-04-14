@@ -102,6 +102,10 @@ public class DbHelper {
         tourEventCostDao.update(cost);
     }
 
+    public void updateTourEventCostAsList(List<TourEventCost> cost){
+        tourEventCostDao.updateInTx(cost);
+    }
+
     public void deleteTourEventCost(TourEventCost cost){
         tourEventCostDao.delete(cost);
     }
