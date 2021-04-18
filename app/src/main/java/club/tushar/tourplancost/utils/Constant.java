@@ -72,10 +72,10 @@ public class Constant{
             return "Yesterday";
         }
 
-        today.add(Calendar.DAY_OF_YEAR, -2);
-        if (today.get(Calendar.YEAR) == myDate.get(Calendar.YEAR) && today.get(Calendar.DAY_OF_YEAR) == myDate.get(Calendar.DAY_OF_YEAR)) {
-            return "2 Days ago";
-        }
+//        today.add(Calendar.DAY_OF_YEAR, -2);
+//        if (today.get(Calendar.YEAR) == myDate.get(Calendar.YEAR) && today.get(Calendar.DAY_OF_YEAR) == myDate.get(Calendar.DAY_OF_YEAR)) {
+//            return "2 Days ago";
+//        }
 
         return dateToLongWithYear(date);
     }
